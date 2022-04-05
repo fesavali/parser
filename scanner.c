@@ -1,8 +1,10 @@
 #include <stdio.h>
-#include <ctype.h>
+#include "ctype.h"
+#include <stdlib.h>
+#include <string.h>
 
 typedef enum {read, write, id, literal, becomes,
-                add, sub, mul, div, lparen, rparen, eof} token;
+                add, sub, mul, lparen, rparen, eof} token;
 
 char token_image[100];
 
@@ -11,7 +13,7 @@ token scan() {
         /* next available char; extra (int) width accommodates EOF */
     int i = 0;              /* index into token_image */
 
-    /* skip white space */ 
+    /* skip white space */
     while (isspace(c)) {
         c = getchar();
     }
@@ -36,7 +38,7 @@ token scan() {
         return literal;
     } else switch (c) {
         case ':':
-            if (c = getchar() != '=') {
+            if ((c = getchar()) != '=') {
                 fprintf(stderr, "lexical error\n");
                 exit(1);
             } else {
@@ -47,7 +49,6 @@ token scan() {
         case '+': c = getchar(); return add;
         case '-': c = getchar(); return sub;
         case '*': c = getchar(); return mul;
-        case '/': c = getchar(); return div;
         case '(': c = getchar(); return lparen;
         case ')': c = getchar(); return rparen;
         default:
@@ -55,3 +56,5 @@ token scan() {
             exit(1);
     }
 }
+
+
